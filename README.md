@@ -17,7 +17,7 @@
 
 ## ✍️ Description
 
-DoubleTap provides an easy way to handle both taps of a double tap individually. This comes in handy specifically when you perform view updates after the first tap, e.g. Highlighting a table view row or collection view item. Normally after you handle the first click to update the view, the second tap will be lost because the tap gesture is re-initialized and the sequence of taps is broken.   
+DoubleTap provides an easy way to handle both taps of a double tap individually. This comes in handy specifically when you perform view updates after the first tap, e.g. highlighting a table view row or collection view item. Normally, after you handle the first click to update the view, the second tap will be lost because the tap gesture is a view and thus re-initialized and the sequence of taps is broken.   
 
 
 ## 🖥 Usage
@@ -28,7 +28,7 @@ First, import the library:
 import DoubleTap
 ```
 
-Then you can use the `onTapGesture(firstTap:secondTap:)` modifier on every `View`:
+Then you can use the `onTapGesture(firstTap:secondTap:)` modifier on any `View`:
 
 ```swift
 struct MyView: View {
