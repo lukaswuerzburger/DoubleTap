@@ -1,7 +1,6 @@
 import SwiftUI
 
 protocol TapHandlerType {
-    static var shared: Self { get }
     func isDoubleTap<Content: View>(for view: Content) -> Bool
 }
 
