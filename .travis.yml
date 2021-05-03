@@ -1,8 +1,7 @@
 language: swift
+os: osx
 osx_image: xcode12.2
-
 install:
   - cd $TRAVIS_BUILD_DIR
-
 script:
-  - swift test
+  - xcodebuild test -scheme "DoubleTap" -destination 'platform=iOS Simulator,name=iPhone 8,OS=14.2'
