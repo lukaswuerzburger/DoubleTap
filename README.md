@@ -3,7 +3,7 @@
     <b>DoubleTap</b><br/>
     <br/>
     <img src="https://img.shields.io/badge/Swift-5-orange" alt="Swift Version 5" title="Swift Version 5"/>
-    <a href="https://travis-ci.org/lukaswuerzburger/DoubleTap"><img src="https://travis-ci.org/lukaswuerzburger/DoubleTap.svg?branch=main" alt="Build Status" title="Build Status"/></a>
+    <a href="https://travis-ci.com/lukaswuerzburger/DoubleTap"><img src="https://travis-ci.com/lukaswuerzburger/DoubleTap.svg?branch=main" alt="Build Status" title="Build Status"/></a>
     <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License MIT" title="License MIT"/>
 </p>
 
