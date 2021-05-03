@@ -5,7 +5,7 @@ protocol TapCacheType: AnyObject {
     func setTapDate(_ date: Date, for key: String)
 }
 
-class TapCache: TapCacheType {
+final class TapCache: TapCacheType {
 
     // MARK: - Variables
 

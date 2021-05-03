@@ -1,3 +1,3 @@
-class TapHandlerTypeResolver {
+final class TapHandlerTypeResolver {
     static var handler: TapHandlerType = TapHandler.shared
 }
