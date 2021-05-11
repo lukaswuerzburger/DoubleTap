@@ -16,9 +16,15 @@ final class TapHandlerMock: TapHandlerType {
 
     // MARK: - TapHandlerType
 
-    var isDoubleTapReturnValue: Bool?
-    func isDoubleTap<Content>(for view: Content) -> Bool where Content : View {
+    var isDoubleTapViewReturnValue: Bool?
+    func isDoubleTap<ContentView>(for view: ContentView) -> Bool where ContentView : View {
         calls.append(.isDoubleTap)
-        return isDoubleTapReturnValue ?? false
+        return isDoubleTapViewReturnValue ?? false
+    }
+
+    var isDoubleTapReferenceReturnValue: Bool?
+    func isDoubleTap<Reference>(for reference: Reference) -> Bool where Reference : Identifiable {
+        calls.append(.isDoubleTap)
+        return isDoubleTapReferenceReturnValue ?? false
     }
 }

@@ -2,7 +2,7 @@ import SwiftUI
 import XCTest
 @testable import DoubleTap
 
-final class TapHandlerTests: XCTestCase {
+class TapHandlerTests: XCTestCase {
 
     // MARK: - Variables
 
@@ -28,31 +28,68 @@ final class TapHandlerTests: XCTestCase {
         tapHandler.dateFactory = dateFactoryMock
     }
 
-    // MARK: - Tests
+    // MARK: - Tests (View)
 
-    func testIsDoubleTapWithoutPreviousTapIsNoDoubleTap() {
+    func testIsDoubleTapWithViewWithoutPreviousTapIsNoDoubleTap() {
         tapCacheMock.lastTapDateReturnValue = nil
         let isDoubleTap = tapHandler.isDoubleTap(for: Rectangle())
         XCTAssertFalse(isDoubleTap)
     }
 
-    func testIsDoubleTapWithPreviousOutdatedTapIsNoDoubleTap() {
+    func testIsDoubleTapWithViewWithPreviousOutdatedTapIsNoDoubleTap() {
         tapCacheMock.lastTapDateReturnValue = Date(timeIntervalSinceNow: -1)
         let isDoubleTap = tapHandler.isDoubleTap(for: Rectangle())
         XCTAssertFalse(isDoubleTap)
     }
 
-    func testIsDoubleTapWithPreviousTapIsDoubleTap() {
+    func testIsDoubleTapWithViewWithPreviousTapIsDoubleTap() {
         tapCacheMock.lastTapDateReturnValue = Date(timeIntervalSinceNow: -0.1)
         let isDoubleTap = tapHandler.isDoubleTap(for: Rectangle())
         XCTAssertTrue(isDoubleTap)
     }
 
-    func testIsDoubleTapUsesCache() {
+    func testIsDoubleTapWithViewUsesCache() {
         tapCacheKeyProviderMock.keyReturnValue = "random-key"
         let date = Date()
         dateFactoryMock.createReturnValue = date
         _ = tapHandler.isDoubleTap(for: Rectangle())
+        XCTAssertEqual(tapCacheMock.calls, [
+            .lastTapDate(key: "random-key"),
+            .setTapDate(date: date, key: "random-key")
+        ])
+        XCTAssertEqual(tapCacheKeyProviderMock.calls, [
+            .key
+        ])
+        XCTAssertEqual(dateFactoryMock.calls, [
+            .create
+        ])
+    }
+
+    // MARK: - Tests (Reference)
+
+    func testIsDoubleTapWithReferenceWithoutPreviousTapIsNoDoubleTap() {
+        tapCacheMock.lastTapDateReturnValue = nil
+        let isDoubleTap = tapHandler.isDoubleTap(for: ReferenceMock())
+        XCTAssertFalse(isDoubleTap)
+    }
+
+    func testIsDoubleTapWithReferenceWithPreviousOutdatedTapIsNoDoubleTap() {
+        tapCacheMock.lastTapDateReturnValue = Date(timeIntervalSinceNow: -1)
+        let isDoubleTap = tapHandler.isDoubleTap(for: ReferenceMock())
+        XCTAssertFalse(isDoubleTap)
+    }
+
+    func testIsDoubleTapWithReferenceWithPreviousTapIsDoubleTap() {
+        tapCacheMock.lastTapDateReturnValue = Date(timeIntervalSinceNow: -0.1)
+        let isDoubleTap = tapHandler.isDoubleTap(for: ReferenceMock())
+        XCTAssertTrue(isDoubleTap)
+    }
+
+    func testIsDoubleTapWithReferenceUsesCache() {
+        tapCacheKeyProviderMock.keyReturnValue = "random-key"
+        let date = Date()
+        dateFactoryMock.createReturnValue = date
+        _ = tapHandler.isDoubleTap(for: ReferenceMock())
         XCTAssertEqual(tapCacheMock.calls, [
             .lastTapDate(key: "random-key"),
             .setTapDate(date: date, key: "random-key")

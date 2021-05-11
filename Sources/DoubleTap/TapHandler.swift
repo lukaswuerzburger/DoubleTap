@@ -1,7 +1,8 @@
 import SwiftUI
 
 protocol TapHandlerType {
-    func isDoubleTap<Content: View>(for view: Content) -> Bool
+    func isDoubleTap<Reference: Identifiable>(for reference: Reference) -> Bool
+    func isDoubleTap<ContentView: View>(for view: ContentView) -> Bool
 }
 
 final class TapHandler: TapHandlerType {
@@ -19,15 +20,21 @@ final class TapHandler: TapHandlerType {
 
     // MARK: - TapHandlerType
 
-    func isDoubleTap<Content: View>(for view: Content) -> Bool {
-        let date = registerTapAndReturnPreviousTap(for: view)
+    func isDoubleTap<ContentView: View>(for view: ContentView) -> Bool {
+        let key = cacheKeyProvider.key(for: view)
+        let date = registerTapAndReturnPreviousTap(for: key)
+        return isDoubleTap(for: date)
+    }
+
+    func isDoubleTap<Reference: Identifiable>(for reference: Reference) -> Bool {
+        let key = cacheKeyProvider.key(for: reference)
+        let date = registerTapAndReturnPreviousTap(for: key)
         return isDoubleTap(for: date)
     }
 
     // MARK: - Private
 
-    private func registerTapAndReturnPreviousTap<Content: View>(for view: Content) -> Date? {
-        let key = cacheKeyProvider.key(for: view)
+    private func registerTapAndReturnPreviousTap(for key: String) -> Date? {
         let date = cache.lastTapDate(for: key)
         let nowDate = dateFactory.create()
         cache.setTapDate(nowDate, for: key)
